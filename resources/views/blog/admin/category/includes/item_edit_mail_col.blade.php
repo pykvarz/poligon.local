@@ -27,7 +27,9 @@
                                 <label for="slug">Идентификатор</label>
                                 <input type="text" value="{{$item->slug}}"
                                 id="slug"
-                                class="form-control">
+                                class="form-control"
+                                name="slug"
+                                >
                             </div>
 
                             <div class="form-group">
