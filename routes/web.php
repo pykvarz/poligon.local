@@ -22,18 +22,15 @@ Route::group(['namespace'=>'App\Http\Controllers\Blog', 'prefix'=>'blog'], funct
     Route::resource('posts', PostController::class)->names('blog.posts');
 });
 
-//$groupData = [
-//    'prefix'=>'admin/blog'
-//];
+
+// **** Admin/Categories **** //
 Route::group(['prefix'=>'admin/blog'], function (){
     $methods = ['index', 'edit', 'update', 'create', 'store',];
     Route::resource('categories', \App\Http\Controllers\Blog\Admin\CategoryController::class)->only($methods)->names('blog.admin.categories');
+    Route::resource('posts', \App\Http\Controllers\Blog\Admin\PostController::class)->except(['show'])->names('blog.admin.posts');
 });
 
-//    Route::get('categories', \App\Http\Controllers\Blog\Admin\CategoryController::class, 'index')->name('blog.admin.categories.index');
-//    Route::get('categories', \App\Http\Controllers\Blog\Admin\CategoryController::class, 'edit')->name('blog.admin.categories.edit');
-//    Route::get('categories', \App\Http\Controllers\Blog\Admin\CategoryController::class, 'update')->name('blog.admin.categories.update');
-//    Route::get('categories', \App\Http\Controllers\Blog\Admin\CategoryController::class, 'create')->name('blog.admin.categories.create');
+
 
 
 
