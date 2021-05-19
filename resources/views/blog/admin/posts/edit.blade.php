@@ -8,13 +8,13 @@
         @include('blog.admin.posts.includes.result_messages')
 
         @if($item->exists)
-            <form action="{{route('blog.admin.posts.update', $item->id)}}">
+            <form action="{{route('blog.admin.posts.update', $item->id)}}" method="POST">
                 @csrf
                 @method('PATCH')
-        @else
+            @else
             <form action="{{route('blog.admin.posts.store')}}">
-        @endif
-            @csrf
+                @csrf
+            @endif
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         @include('blog.admin.posts.includes.post_edit_main_col')

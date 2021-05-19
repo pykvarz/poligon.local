@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Blog\Admin;
 
+use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\BlogPostRepository;
 use Illuminate\Http\Response;
@@ -98,11 +100,24 @@ class PostController extends BaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(BlogPostUpdateRequest $request, $id)
     {
-        //
+        $item = $this->blogPostRepository->getEdit($id);
+        if (empty($item)) {
+            return back()
+                ->withErrors(['msg' => "Запись id=[{ $id }]"])
+                ->withInput();
+        }
+        $data = $request->all();
+
+        if (empty($data['slug'])) {
+            $data['slug'] = \Str::slug($data['title']);
+        }
+        if (empty($item->published_at) && $data['is_published']) {
+            $data['published_at'] = Carbon::now();
+        }
     }
 
     /**
@@ -113,6 +128,6 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        dd(__METHOD__, $id, request()->all());
     }
 }
