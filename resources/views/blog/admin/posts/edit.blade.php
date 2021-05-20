@@ -12,7 +12,7 @@
                 @csrf
                 @method('PATCH')
             @else
-            <form action="{{route('blog.admin.posts.store')}}">
+            <form action="{{route('blog.admin.posts.store')}}" method="POST">
                 @csrf
             @endif
                 <div class="row justify-content-center">
