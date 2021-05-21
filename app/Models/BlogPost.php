@@ -21,6 +21,9 @@ class BlogPost extends Model
         'published_at',
         'user_id',
     ];
+    /**
+     * @var mixed
+     */
 
     /**
      * Категория статьи.

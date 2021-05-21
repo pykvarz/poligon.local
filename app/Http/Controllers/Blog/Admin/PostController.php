@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Blog\Admin;
 
 use App\Http\Requests\BlogPostUpdateRequest;
 use App\Repositories\BlogCategoryRepository;
-use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Repositories\BlogPostRepository;
 use Illuminate\Http\Response;
@@ -40,7 +43,7 @@ class PostController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -51,7 +54,7 @@ class PostController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return void
      */
     public function create()
     {
@@ -61,8 +64,8 @@ class PostController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
@@ -72,8 +75,8 @@ class PostController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return void
      */
     public function show($id)
     {
@@ -84,7 +87,7 @@ class PostController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
@@ -99,9 +102,9 @@ class PostController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param BlogPostUpdateRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
     public function update(BlogPostUpdateRequest $request, $id)
     {
@@ -114,12 +117,7 @@ class PostController extends BaseController
         }
 
         $data = $request->all();
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
-        if (empty($item->published_at) && $data['is_published']) {
-            $data['published_at'] = Carbon::now();
-        }
+
         $result = $item->update($data);
         if ($result) {
             return redirect()
