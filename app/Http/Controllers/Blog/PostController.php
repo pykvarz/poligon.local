@@ -14,11 +14,12 @@ class PostController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $items = BlogPost::all();
+        $item = new BlogPost();
+        $categoryList = $this->blogPostRepository->getForComboBox;
         return view('blog.posts.index', compact('items'));
     }
 

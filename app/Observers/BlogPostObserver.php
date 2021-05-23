@@ -68,8 +68,8 @@ class BlogPostObserver
      */
     public function creating(BlogPost $blogPost)
     {
-        /* $this->setPublishedAt($blogPost);
-        $this->setSlug($blogPost);*/
+        $this->setPublishedAt($blogPost);
+        $this->setSlug($blogPost);
     }
 
     /**
